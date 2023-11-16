@@ -1,4 +1,5 @@
 extends CharacterBody2D
+signal hit
 #PLAYER IS IN A GROUP CALLED "player"
 @export var max_speed := 100
 @export var acceleration := 1500
@@ -62,3 +63,10 @@ func apply_movement(accel):
 func _on_hurt_box_hurt(damage):
 	hp -= damage
 	print(hp)
+func die():
+	hit.emit()
+	queue_free()
+
+
+func _on_mob_detector_body_entered(body):
+	die()
